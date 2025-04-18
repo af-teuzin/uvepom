@@ -1,0 +1,7 @@
+redis
+python-dotenv
+psycopg
+psycopg-pool
+requests
+fastapi
+pydantic

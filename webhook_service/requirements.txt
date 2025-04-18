@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+psycopg
+redis
+kafka-python
+python-dotenv
+psycopg-pool
+psycopg-binary

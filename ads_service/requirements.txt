@@ -1,0 +1,4 @@
+google-ads
+uvicorn
+fastapi
+psycopg2-binary

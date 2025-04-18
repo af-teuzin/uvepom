@@ -1,0 +1,29 @@
+ads_service/google_ads/google_ads.yaml
+ads_service/google_ads/service-account-key.json
+**/service-account-key.json
+**/*.json.secret
+**/*.key
+**/*.pem
+
+# Environment variables
+.env
+.env.*
+
+# Large data files
+*.xlsx
+*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.pytest_cache/
+.coverage
+htmlcov/
+venv/
+ENV/
+
+# OS specific
+.DS_Store
+Thumbs.db

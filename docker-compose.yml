@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  webhook-service:
+    build:
+      context: ./webhook_service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=redis
+    restart: unless-stopped
+    networks:
+      - UvepomNet
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - UvepomNet
+    restart: unless-stopped
+
+  processing-service:
+    build:
+      context: ./processing_service
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=redis
+    restart: unless-stopped
+    networks:
+      - UvepomNet
+    depends_on:
+      - redis
+
+  ads-service:
+    build:
+      context: ./ads_service
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - UvepomNet
+
+volumes:
+  redis-data:
+    driver: local 
