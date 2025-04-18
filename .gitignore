@@ -8,7 +8,7 @@ ads_service/google_ads/service-account-key.json
 # Environment variables
 .env
 .env.*
-
+stack.env
 # Large data files
 *.xlsx
 *.csv
@@ -23,7 +23,6 @@ __pycache__/
 htmlcov/
 venv/
 ENV/
-
 # OS specific
 .DS_Store
 Thumbs.db
