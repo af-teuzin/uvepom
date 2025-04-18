@@ -2,22 +2,20 @@ version: '3.8'
 
 services:
   webhook-service:
-    build:
-      context: ./webhook_service
-      dockerfile: Dockerfile
+    image: ${REGISTRY_URL}/webhook-service:latest
     ports:
       - "8080:8080"
     env_file:
-      - .env
+      - stack.env
     environment:
       - REDIS_HOST=redis
-    restart: unless-stopped
     networks:
       - UvepomNet
-    env_file:
-      - stack.env
     depends_on:
       - redis
+    deploy:
+      restart_policy:
+        condition: any
 
   redis:
     image: redis:7-alpine
@@ -32,35 +30,33 @@ services:
       - UvepomNet
     env_file:
       - stack.env
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: any
 
   processing-service:
-    build:
-      context: ./processing_service
-      dockerfile: Dockerfile
+    image: ${REGISTRY_URL}/processing-service:latest
     env_file:
-      - .env
+      - stack.env
     environment:
       - REDIS_HOST=redis
-    restart: unless-stopped
     networks:
       - UvepomNet
-    env_file:
-      - stack.env
     depends_on:
       - redis
+    deploy:
+      restart_policy:
+        condition: any
 
   ads-service:
-    build:
-      context: ./ads_service
-      dockerfile: Dockerfile
-    env_file:
-      - .env
-    restart: unless-stopped
+    image: ${REGISTRY_URL}/ads-service:latest
     env_file:
       - stack.env
     networks:
       - UvepomNet
+    deploy:
+      restart_policy:
+        condition: any
 
 volumes:
   redis-data:
